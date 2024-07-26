@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <th:block th:replace="~{fragments/HtmlHeader :: html_head('Change Password')}"></th:block>
+</head>
+<body>
+
+<div class="emailForm">
+    <div id="backArrow">
+        <a th:href="@{/api/forgot/password}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                 class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+                <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+            </svg>
+        </a>
+    </div>
+    <div class="card text-center" style="width: 370px;">
+        <div class="card-header h5 text-white bg-primary">Password Reset</div>
+        <div class="card-body px-5">
+            <form th:object="${newCode}" th:action="@{/api/change}" th:method="POST">
+                <p class="card-text py-2">
+                    Please enter your otp which we have send to your email address.
+                </p>
+                <input th:field="*{userId}" hidden/>
+
+                <div class="form-outline">
+                    <input type="number" min="0" id="typeEmail" class="form-control my-3" th:field="*{code}"
+                           placeholder="Enter your otp "/>
+
+                </div>
+                <button type="submit" class="btn btn-primary w-50">Check</button>
+                <div class="d-flex justify-content-between mt-4">
+                    <a class="" th:href="@{/api/signIn}">Login</a>
+                    <a class="" th:href="@{/api/register}">Register</a>
+                </div>
+
+                <div class="alert alert-danger alert-dismissible fade show" th:if="${errorMsg}">
+                    <i class="fa-solid fa-triangle-exclamation" style="color: #ff0505;"></i> <span
+                        th:text="${errorMsg}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/Footer :: footer}"></div>
+</body>
+</html>

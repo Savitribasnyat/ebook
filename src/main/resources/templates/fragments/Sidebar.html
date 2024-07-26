@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Sidebar fragment</title>
+</head>
+<body>
+<div>
+    <nav th:fragment="sidebar">
+        <ul>
+           <a th:href="@{/home}"> <li class="logo"><img alt="Book Logo" th:src="@{/images/logo.png}"></li></a>
+
+            <div sec:authorize="hasAuthority('ADMIN')">
+                <li>
+                    <div class="dropdown">
+<!--                        <a href="#" class="dropbtn">Master Data</a>-->
+<!--                        <div class="dropdown-content">-->
+                            <a th:href="@{/book/table}">Book Setup</a>
+                            <a th:href="@{/author/table}">Author Setup</a>
+                            <a th:href="@{/category/table}">Category Setup</a>
+                            <a th:href="@{/member/table}">Member Setup</a>
+                            <a th:href="@{/request/book/main/table}">User Requested Book</a>
+<!--                        </div>-->
+                    </div>
+                </li>
+            </div>
+
+            <div sec:authorize="hasAuthority('USER')">
+                <li>
+                    <div class="dropdown">
+<!--                        <a href="#" class="dropbtn">Transaction</a>-->
+<!--                        <div class="dropdown-content">-->
+                            <a th:href="@{/category/list}">Category</a>
+                            <a th:href="@{/author/list}">Author</a>
+                            <a th:href="@{/request/book/table}">Request Book</a>
+
+<!--                        </div>-->
+                    </div>
+                </li>
+            </div>
+
+            <li>
+                <a onclick="showPopup()" href="#"> Logout</a>
+            </li>
+
+        </ul>
+    </nav>
+
+</div>
+</body>
+</html>

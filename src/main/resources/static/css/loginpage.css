@@ -1,0 +1,100 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.container {
+    max-width: 440px;
+    padding: 0 20px;
+    margin: 100px auto; /* Adjusted margin for better positioning */
+}
+
+.wrappers {
+    width: 100%;
+    background: #ecf0f1; /* Change to your preferred wrapper background color */
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px 1px rgba(0, 0, 0, 0.1);
+}
+
+.wrappers .title {
+    height: 90px;
+    background: #3498db; /* Change to your preferred title background color */
+    border-radius: 5px 5px 0 0;
+    color: #fff;
+    font-size: 30px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wrappers form {
+    padding: 30px 25px 25px 25px;
+}
+
+.wrappers form .row {
+    height: 45px;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.wrappers form .row input {
+    height: 100%;
+    width: calc(100% - 60px);
+    outline: none;
+    padding-left: 60px;
+    border-radius: 5px;
+    border: 1px solid lightgrey;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.wrappers form .row i {
+    position: absolute;
+    width: 47px;
+    height: 100%;
+    color: #fff;
+    font-size: 18px;
+    background: #3498db;
+    border: 1px solid #3498db;
+    border-radius: 5px 0 0 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wrappers form .remember {
+    margin-bottom: 15px; /* Adjusted margin for better spacing */
+}
+
+.wrappers form .button {
+    text-align: center; /* Center the button */
+}
+
+.wrappers form .button input {
+    color: #fff;
+    font-size: 16px; /* Reduced font size for the button */
+    font-weight: 500;
+    padding: 10px 15px; /* Adjusted padding for a smaller button */
+    background: #3498db;
+    border: 1px solid #3498db;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form .button input:hover {
+    background: #2980b9;
+}
+
+.wrappers form .signup-link {
+    text-align: center;
+    margin-top: 15px; /* Adjusted margin for better spacing */
+    font-size: 16px; /* Adjusted font size for better readability */
+}
+
+/* Add your other styles as needed */

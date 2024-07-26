@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html  xmlns:th="https://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/HtmlHeader :: html_head('Registration Page')}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/loginpage.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+</head>
+<body>
+<body>
+<div class="container">
+    <div class="wrappers">
+
+        <div class="title"><span>Registration Form</span></div>
+        <form th:object="${user}" th:action="@{/api/user/save}" th:method="POST" >
+
+            <div class="row">
+                <i class="fas fa-user"></i>
+                <input type="text" placeholder="Name"
+                       th:field="*{name}"
+                       th:classappend="${#fields.hasErrors('name')?'is-invalid':'is-valid'}">
+            </div>
+
+            <div class="row">
+                <i class="fas fa-envelope"></i>
+                <input type="text" placeholder="Email or Phone"
+                       th:field="*{email}"
+                       th:classappend="${#fields.hasErrors('email')?'is-invalid':''}"
+                       >
+
+            </div>
+
+            <div class="row">
+                <i class="fas fa-lock"></i>
+                <input type="password" placeholder="Password"
+                       th:field="*{password}"
+                       th:classappend="${#fields.hasErrors('password')?'is-invalid':''}"
+                >
+            </div>
+
+            <div class="row button">
+                <input type="submit" value="Register">
+            </div>
+            <div class="signup-link">Already have an account? <a th:href="@{/api/signIn}">Login</a></div>
+
+            <div class="alert alert-danger alert-dismissible fade show mt-3" th:if="${#fields.hasErrors('*')}">
+                <i class="fa-solid fa-triangle-exclamation" style="color: #ff0505;"></i><hr>
+                <ul>
+                    <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                </ul>
+
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div th:replace="~{fragments/Footer :: footer}"></div>
+</body>
+</body>
+</html>

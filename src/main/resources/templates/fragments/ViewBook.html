@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Book Details</title>
+
+
+</head>
+<body>
+<div th:fragment="viewbook">
+    <style>
+        body {
+            font-family: "Arial", sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /*height: 100vh;*/
+        }
+
+        .book-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%;
+            max-width: 600px; /* Adjust the maximum width as needed */
+            /*height: 80vh;*/
+            margin-top: 60px;
+            margin-left: 180px;
+        }
+
+        .book-image {
+            width: 536px;
+            height: 44vh;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .book-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .buttonclass {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .book-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .book-category {
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .book-description {
+            margin-bottom: 20px;
+        }
+
+        .button-primary,
+        .button-secondary {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .button-secondary {
+            background-color: #2196f3;
+        }
+
+        .button-primary:hover,
+        .button-secondary:hover {
+            background-color: #45a049;
+        }
+
+        .book-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+    <div class="book-container">
+        <div class="book-title">Book Title ohvosdljg isjhgksj</div>
+        <div class="book-details">
+            <img class="book-image" th:src="@{/images/logo.jpg}" alt="Book Cover"/>
+            <div class="book-category">Category: Fiction</div>
+
+            <div class="buttonclass">
+                <a href="#" class="button-primary">Read Online</a>
+                <a href="#" class="button-secondary">Download</a>
+            </div>
+            <div class="book-description">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                ullamcorper justo eu quam blandit, nec pellentesque nulla tincidunt.
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

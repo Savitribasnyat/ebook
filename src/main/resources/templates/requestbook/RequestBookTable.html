@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <th:block th:replace="~{fragments/HtmlHeader :: html_head('Requested Book Table')}"></th:block>
+</head>
+<body>
+<div th:replace="~{fragments/Sidebar :: sidebar}"></div>
+<!-- tables section -->
+<div class="wrapper">
+  <div th:replace="~{fragments/NavBar :: navbar}"></div>
+  <div class="section">
+    <div class="box-area">
+
+      <div class="user_table_post  mt-5">
+        <!--                        error message-->
+        <div class="alert alert-danger alert-dismissible fade show" th:if="${errorMsg}">
+          <i class="fa-solid fa-triangle-exclamation" style="color: #ff0505;"></i> <span th:text="${errorMsg.message}"></span>
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <!-- success message -->
+        <div class="alert alert-success alert-dismissible fade show" th:if="${message}">
+          <i class="fa-solid fa-badge-check" style="color: #16e37a;"></i><span th:text="${message}"></span>
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <a th:href="@{/home}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+               class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+            <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+          </svg>
+        </a>
+
+        <div class="d-flex justify-content-between w-1024 desc" style="margin-top: 30px">
+          <h3>Requested Book list</h3>
+          <a class="btn btn-info" id="creatBtn" th:href="@{/request/book/form}">Create</a>
+        </div>
+        <table class="table table-bordered table-striped mt-3" >
+          <thead>
+          <tr>
+            <th>S.N.</th>
+            <th><i class="fa-solid fa-user"></i>Book Name</th>
+            <th><i class="fa-regular fa-newspaper"></i>Author</th>
+            <th><i class="fa-regular fa-newspaper"></i>Status</th>
+            <th><i class="fa-regular fa-newspaper"></i>Action</th>
+<!--            <th>  <i class="fa-solid fa-pen"></i>Action</th>-->
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="books,Index:${books}">
+            <td><div  th:text="${Index.count}"></div></td>
+            <td ><div th:text="${books.name}"></div></td>
+            <td ><div th:text="${books.authorName}"></div></td>
+            <td ><div th:text="${books.status}"></div></td>
+            <td class="bookAction">
+              <a  th:href="@{/book/view/name/}+${books.name}">
+                <i class="fa-sharp fa-solid fa-eye"></i>
+              </a>
+            </td>
+          </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+
+    </div>
+  </div>
+  <!--            <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>-->
+</div>
+
+
+<div th:replace="~{/fragments/LogoutPopup :: popup}"></div>
+<div th:replace="~{fragments/Footer :: footer}"></div>
+</body>
+</html>

@@ -1,0 +1,486 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    background: #e3e9f7;
+}
+nav ul {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 240px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #262626;
+}
+nav ul li {
+    list-style: none;
+}
+nav ul li a {
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 20px;
+    color: #fff;
+    position: relative;
+    padding: 25px 0 25px 38px;
+}
+nav ul li a:before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 0%;
+    height: 100%;
+    background: #e3e9f7;
+    border-radius: 40px 0px 0px 40px;
+    z-index: -1;
+    transition: all 300ms ease-in-out;
+}
+nav ul li a:hover {
+    color: #2b2626;
+}
+nav ul li a:hover:before {
+    width: 95%;
+}
+.wrapper {
+    margin-left: 260px;
+}
+.section {
+    display: grid;
+    min-height: 100vh;
+    margin-left: 90px;
+}
+.box-area h2 {
+    text-transform: uppercase;
+    font-size: 50px;
+}
+.box-area p {
+    line-height: 2;
+}
+.box-area {
+    width: 75%;
+}
+.logo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 25px auto;
+}
+.logo img {
+    width: 100%;
+}
+table{
+    table-layout: fixed;
+    width: 400px;
+    font: larger monospace;
+    border-collapse: collapse;
+}
+th:nth-child(1) {
+    width: 20%;
+}
+th:nth-child(3) {
+    width: 20%;
+}
+/*
+ * inline-block elements expand as much as content, even more than 100% of parent
+ * relative position makes z-index work
+ * explicit width and nowrap makes overflow work
+ */
+table div {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: top;
+}
+/*
+ * higher z-index brings element to front
+ * auto width cancels the overflow
+ */
+table div:hover {
+    z-index: 1;
+    width: auto;
+    background-color: #FFFFCC;
+}
+
+
+
+/* Dropdown Button
+.dropbtn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+  } */
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    /* display: inline-block; */
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    margin-left: 100px;
+    min-width: 230px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+
+/* form css */
+.form-floating{
+    margin-top: 28px;
+    width: 70%;
+
+}
+
+.category-form{
+    margin-top: 90px;
+    margin-left: 90px;
+}
+
+
+table.table.table-bordered.table-striped.mt-3 {
+    width: 1024px;
+}
+
+.d-flex.justify-content-between.w-1024.desc {
+    width: 1024px;
+}
+
+
+/* use reverse flexbox to take advantage of flex-direction: reverse */
+.star-rating {
+    display: flex;
+    align-items: center;
+    width: 160px;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    position: relative;
+
+}
+.ratingContainer{
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    margin-block: auto;
+}
+/* hide the inputs */
+.star-rating input {
+    display: none;
+}
+/* set properties of all labels */
+.star-rating > label {
+    width: 30px;
+    height: 30px;
+    font-family: Arial;
+    font-size: 30px;
+    transition: 0.2s ease;
+    color: orange;
+}
+/* give label a hover state */
+.star-rating label:hover {
+    color: #ff69b4;
+    transition: 0.2s ease;
+}
+.star-rating label:active::before {
+    transform:scale(1.1);
+}
+
+/* set shape of unselected label */
+.star-rating label::before {
+    content: '\2606';
+    position: absolute;
+    top: 0px;
+    line-height: 26px;
+}
+/* set full star shape for checked label and those that come after it */
+.star-rating input:checked ~ label:before {
+    content:'\2605';
+}
+
+@-moz-document url-prefix() {
+    .star-rating input:checked ~ label:before {
+        font-size: 36px;
+        line-height: 21px;
+    }
+}
+
+.actionField{
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+}
+.bookCategory{
+    margin-top: 20px;
+    margin-left: 100px;
+}
+
+.titleDesc{
+    display: flex;
+    justify-content: space-between;
+}
+
+.titleDesc{
+    margin-right: 280px;
+}
+
+.bookAction{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.bookAction a {
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+/* Popup box style */
+.popup {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.popup-content {
+    background-color: #ecf0f1; /* Change to your preferred color */
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+}
+
+.popup-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.popup-close:hover,
+.popup-close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.popup-button {
+    background-color: #3498db; /* Match the color of the login button */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.popup-button:hover {
+    background-color: #2980b9; /* Adjust the hover color as needed */
+}
+
+
+/*code input filter search*/
+
+.codeCheck{
+    position: relative;
+}
+
+.search-result{
+    position: absolute;
+    background: white;
+    width: 100%;
+    padding: 15px;
+    border: 1px solid dimgray;
+    border-radius:9px ;
+    display: none;
+    z-index: 1000;
+}
+
+.after_form{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.book_form{
+    margin-left: 170px;
+}
+.book_desc img{
+    width:100%;
+    height:250px;
+    object-fit:cover;
+    object-position:50% 50%;
+    border-radius: 9px;
+}
+.book_desc p{
+    font-size: 20px;
+    font-weight: bolder;
+    margin-left: 120px;
+}
+
+/*font style*/
+th i{
+    margin-right: 8px;
+}
+
+
+/*book view page*/
+.titleDescBookView{
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: 200px;
+}
+
+/*navbar css*/
+.navbar{
+    margin-right: 13px;
+    display: flex;
+    align-items: center;
+    padding-inline: 20px;
+
+}
+
+.navbar .navbar-light{
+    display: flex;
+    justify-content: space-between;
+
+}
+
+/*book card */
+.videocard {
+    width: 270px;
+    margin-bottom: 40px;
+}
+.card{
+    margin-right: 60px;
+    margin-bottom: 30px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+}
+.videocard:hover{
+    cursor: pointer;
+}
+
+.videocard__img{
+    height: 140px;
+    width: 250px;
+    /*margin-left: 30px;*/
+    object-fit: cover;
+}
+
+.videocard__img:hover{
+    /*transition: 0.4s;*/
+    /*transform: scale(1.1);*/
+}
+
+.videoCard__info{
+    display: flex;
+    margin-top: 10px;
+    padding-right: 30px;
+    margin-left: 10px;
+}
+
+.video__text {
+    margin-left: 15px;
+}
+
+.video__text >  h4{
+    font-size: 14px;
+    margin-bottom: 7px;
+}
+.video__text >  p{
+    font-size: 14px;
+    color: gray;
+}
+.btn{
+    margin-left: 10px;
+    margin-bottom: 20px;
+
+}
+.cards{
+    margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 120px;
+}
+
+.userLogin{
+    display: flex;
+    align-items: center;
+}
+.userLogin p{
+    margin-left: 10px;
+}
+
+/*transaction table page css*/
+#transactionHistory{
+    display: flex;
+    justify-content: space-between;
+}
+.download i{
+   font-size: 30px;
+}
+
+/*forgot password css*/
+#forgotPassword{
+    margin-left: 100px;
+}
+
+.emailForm{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 120px;
+}
+#backArrow{
+    margin-bottom: 430px;
+    margin-left: 80px;
+}
+
+/*excel choose file css*/
+#excelTitle{
+    font-size: 20px;
+    margin-top: 20px;
+
+}

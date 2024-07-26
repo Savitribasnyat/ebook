@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/HtmlHeader :: html_head('Login Page')}"></th:block>
+    <link th:href="@{/css/loginpage.css}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+    <!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>-->
+    <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
+    <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>-->
+    <!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>-->
+    <script src="https://kit.fontawesome.com/a7c7ec04b9.js" crossorigin="anonymous"></script>
+
+
+</head>
+<body>
+<div class="fullPage" >
+
+    <div class="container">
+        <div class="wrappers">
+            <div class="title"><span>Login Form</span></div>
+            <form th:action="@{/login}" th:method="POST">
+
+                <div class="row">
+                    <i class="fas fa-envelope"></i>
+                    <input type="text" placeholder="Email or Phone" name="username" required>
+                </div>
+                <div class="row">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Password" name="password" required>
+                </div>
+
+                <div class="remember form-check">
+                    <input class="form-check-input" type="checkbox" id="remember" name="remember-me" >
+                    <label class="form-check-label" for="remember">
+                        Remember Me
+                    </label>
+                </div>
+
+                <div class="row button">
+                    <input type="submit" value="Login">
+                </div>
+                <div class="signup-link">Not a member? <a th:href="@{/api/register}">Signup now</a></div>
+                <a th:href="@{/api/forgot/password}" id="forgotPassword">
+                    Forgot password ?
+                </a>
+
+                <!--            this will be shown if the email & password to login is invalid-->
+                <div class="alert alert-danger alert-dismissible fade show mt-2" th:if="${param.error}">
+                    <i class="fa-solid fa-triangle-exclamation" style="color: #ff0505;"></i> Invalid username & password
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+
+                <!--  error message-->
+                <div class="alert alert-danger alert-dismissible fade show" th:if="${errorMsg}">
+                    <i class="fa-solid fa-triangle-exclamation" style="color: #ff0505;"></i> <span
+                        th:text="${errorMsg.message}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+
+                <!-- success message -->
+                <div class="alert alert-success alert-dismissible fade show" th:if="${message}">
+                    <i class="fa-solid fa-badge-check" style="color: #16e37a;"></i><span th:text="${message}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/Footer :: footer}"></div>
+</body>
+</html>

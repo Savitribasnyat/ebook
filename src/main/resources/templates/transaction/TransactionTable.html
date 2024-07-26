@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <th:block th:replace="~{fragments/HtmlHeader :: html_head('Transaction History Table')}"></th:block>
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+
+<div th:replace="~{fragments/Sidebar :: sidebar}"></div>
+
+<!-- tables section -->
+<div class="wrapper">
+  <div th:replace="~{fragments/NavBar :: navbar}"></div>
+  <div class="section">
+    <div class="box-area">
+
+      <div class="user_table_post  mt-5">
+        <div class="d-flex justify-content-between w-1024 desc" id="transactionHistory">
+          <div>
+            <h3>Transaction History</h3>
+          </div>
+          <div class="download">
+            <a th:href="@{/transaction/download/excel}" >
+              <i class="fa-solid fa-file-arrow-down" style="color: #24a0d6;"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- success message -->
+        <div class="alert alert-success alert-dismissible fade show" th:if="${downloadMsg}">
+          <i class="fa-solid fa-badge-check" style="color: #16e37a;"></i> <span th:text="${downloadMsg}"></span>
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <!--                        error message-->
+        <div class="alert alert-danger alert-dismissible fade show" th:if="${errorMsg}">
+          <i class="fa-solid fa-triangle-exclamation" style="color: #ff0505;"></i> <span th:text="${errorMsg}"></span>
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <div>
+          <form th:action="@{/transaction/page/filter/first/0}" th:object="${filter}" th:method="POST">
+
+            <div class="form-floating d-flex flex-fill justify-content-between gap-5">
+              <div class="form-floating">
+                <input type="date" class="form-control" id="inputDate"
+                       th:field="*{from}"
+                       th:classappend="${errorMsg}?'is-invalid':''">
+                <label for="floatingInput">from</label>
+              </div>
+
+              <div class="form-floating">
+                <input type="date"  min="10"
+                       th:field="*{to}"
+                       th:classappend="${#fields.hasErrors('from')?'is-invalid':''}"
+                       class="form-control">
+                <label for="floatingInput">To Date</label>
+              </div>
+
+              <div class="form-floating">
+                <button class="btn  btn-primary upload_btn_submit ms-4 mt-4" type="submit">Search</button>
+              </div>
+
+            </div>
+
+          </form>
+        </div>
+
+
+        <table class="table table-bordered table-striped mt-3" >
+          <thead>
+          <tr>
+            <th>S.N.</th>
+            <th><i class="fa-solid fa-book"></i>Book Name</th>
+            <th><i class="fa-solid fa-user"></i> Customer Name</th>
+            <th>Rent from</th>
+            <th>Status</th>
+            <th>Return Date</th>
+            <th><i class="fa-solid fa-code"></i>Code</th>
+
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="t, Index : ${transaction} ">
+            <td th:text="${Index.count}">1</td>
+            <td th:text="${t.book_name}"></td>
+            <td th:text="${t.member_name}"></td>
+            <td th:text="${t.from}"></td>
+            <td th:text="${t.status}"></td>
+            <td th:text="${t.returnDate}"></td>
+            <td th:text="${t.code}"></td>
+
+          </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <div aria-label="Page navigation example">
+        <ul class="pagination">
+          <li
+              class="page-item">
+            <a th:href="@{'/transaction/page/' + ${currentPage - 1}}"
+               class="page-link"
+               th:classappend="${currentPage <= 0}? 'disabled':''"
+            >Previous</a>
+          </li>
+          <li th:each="i: ${#numbers.sequence(0, totalPages - 1)}"
+              class="page-item">
+            <a  th:href="@{'/transaction/page/' + ${i}}"
+                class="page-link"
+                th:classappend="${currentPage == i}?'active':''"
+            >[[${i+1}]]</a>
+          </li>
+          <!--                    <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+          <!--                    <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+          <li class="page-item">
+            <a  th:href="@{'/transaction/page/' + ${currentPage + 1}}"
+                class="page-link"
+                th:classappend="${currentPage >= totalPages - 1}?'disabled':''"
+            >Next</a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!--            <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>-->
+</div>
+
+
+<script>
+  $(function(){
+    var dtToday = new Date();
+
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+      month = '0' + month.toString();
+    if(day < 10)
+      day = '0' + day.toString();
+
+    var minDate = year + '-' + month + '-' + day;
+    $('#inputDate').attr('max', minDate);
+  });
+</script>
+
+<div th:replace="~{fragments/Footer :: footer}"></div>
+
+
+</body>
+</html>

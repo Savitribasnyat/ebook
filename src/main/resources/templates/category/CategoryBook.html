@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <th:block th:replace="~{fragments/HtmlHeader :: html_head('Category Books')}"></th:block>
+</head>
+<body>
+<div th:replace="~{fragments/Sidebar :: sidebar}"></div>
+<div class="wrapper">
+  <div class="navbar" th:replace="~{fragments/NavBar :: navbar}"></div>
+  <div class="header">
+    <h1 style="margin: 0.5em 0 0.2em 0;
+	color: #343434;
+	font-weight: normal;
+	font-family: 'Ultra', sans-serif;
+	font-size: 33px;
+	line-height: 34px;
+	text-transform: uppercase;
+	text-shadow: 0 2px white, 0 3px #777;">
+      <span th:text="${category.name}"> </span>  Books
+    </h1>
+    <div class="zigzag"></div>
+    <a th:href="@{/category/list}">
+      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+        <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+      </svg>
+    </a>
+  </div>
+  <div class="cards" >
+    <div class="card" style="width: 14rem;" th:each="b:${books}">
+      <img th:src="${b.image_path}" class="videocard__img" alt="Book image">
+      <div class="card-body">
+        <h5 class="video__text" th:text="${b.name}"></h5>
+        <a th:href="@{/book/view/}+${b.id}" class="btn btn-primary btn">More</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div th:replace="~{fragments/Footer :: footer}"></div>
+
+<style>
+  .header{
+    margin-bottom: 18px;
+    margin-left: 120px;
+  }
+  .card img{
+    height: 140px;
+    width: 220px;
+    /*margin-left: 30px;*/
+    object-fit: cover;
+  }
+  .cards{
+    margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 90px;
+  }
+  .header{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+</style>
+
+</body>
+</html>

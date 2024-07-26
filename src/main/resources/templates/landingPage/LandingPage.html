@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:replace="~{fragments/HtmlHeader :: html_head('Home Page')}"></th:block>
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <style>
+        .MultiCarousel { float: left; overflow: hidden; padding: 15px; width: 100%; position:relative; }
+        .MultiCarousel .MultiCarousel-inner { transition: 1s ease all; float: left; }
+        .MultiCarousel .MultiCarousel-inner .item { float: left; width: 250px;
+            /*margin: 5px;*/
+            border: 1px solid #ddd;
+            gap: 10px;
+            height: 250px;
+            /*margin-left: 10px;*/
+            border-radius: 5px;
+            overflow: hidden;}
+        .MultiCarousel .MultiCarousel-inner .item > div { text-align: center; padding:10px;
+            margin:10px; background:#f1f1f1; color:#666; }
+        .MultiCarousel .leftLst, .MultiCarousel .rightLst { position:absolute; border-radius:50%;top:calc(50% - 20px); }
+        .MultiCarousel .leftLst { left:0; }
+        .MultiCarousel .rightLst { right:0; }
+
+        .MultiCarousel .leftLst.over, .MultiCarousel .rightLst.over { pointer-events: none; background:#ccc; }
+    </style>
+
+
+</head>
+<body>
+<div th:replace="~{fragments/Sidebar :: sidebar}"></div>
+<div>
+<!-- tables section -->
+<div class="wrapper">
+    <div th:replace="~{fragments/NavBar :: navbar}"></div>
+        <div class="header">
+            <h1 style="margin: 0.5em 0 0.2em 0;
+	color: #343434;
+	font-weight: normal;
+	font-family: 'Ultra', sans-serif;
+	font-size: 33px;
+	line-height: 34px;
+	text-transform: uppercase;
+	text-shadow: 0 2px white, 0 3px #777;" sec:authorize="hasAuthority('USER')">
+                FEATURED BOOKS
+            </h1>
+            <div class="zigzag"></div>
+        </div>
+    <div class="dashboard" sec:authorize="hasAuthority('ADMIN')">
+        <div class="welcome-text">
+            <div class="line">
+                <span class="big">W</span>elcome
+            </div>
+            <div class="line">
+                to
+            </div>
+            <div class="line">
+                Admin Portal
+            </div>
+        </div>
+        <style>
+            .dashboard {
+                background-color: #fff; /* Set background to white */
+                color: #2c3e50;
+                padding: 20px;
+                font-family: 'Arial', sans-serif;
+                display: flex;
+                align-items: center;
+                margin-top: 90px;
+                margin-left: 360px;
+            }
+
+            .welcome-text {
+                font-size: 36px;
+                font-weight: bold;
+                letter-spacing: 2px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .welcome-text .line {
+                display: flex;
+            }
+
+            .line .big {
+                font-size: 48px;
+            }
+        </style>
+    </div>
+
+</div>
+
+<div class="container" style="margin-right: 50px" sec:authorize="hasAuthority('USER')">
+    <div class="row">
+        <div class="MultiCarousel" data-items="1,3,5,6" data-slide="1" id="MultiCarousel"  data-interval="1000">
+            <div class="MultiCarousel-inner">
+                <style>
+                    /*.item {*/
+                    /*    !*display: inline;*!*/
+                    /*    width: 250px;*/
+                    /*    !*margin: 5px;*!*/
+                    /*    border: 1px solid #ddd;*/
+                    /*    gap: normal*/
+                    /*    border-radius: 5px;*/
+                    /*    overflow: hidden;*/
+                    /*}*/
+
+                    .pad15 {
+                        display: flex;
+                        flex-direction: column;
+                        height: 100%;
+                    }
+
+                    .card-body {
+                        flex: 1;
+                    }
+
+                    .videocard__img {
+                        width: 100%;
+                        /*height: 300px;*/
+                        max-height: 140px;
+                        object-fit: cover;
+                        margin-right: 20px;
+                    }
+
+                    .video__text {
+                        margin: 10px 0;
+                        text-overflow: ellipsis; white-space: nowrap; overflow: hidden;
+                    }
+
+                    /* Add other styles as needed */
+                </style>
+
+                <div th:each="b:${books}">
+                    <div class="item">
+                        <div class="pad15">
+                            <div class="card-body" style="height: auto;">
+                                <img th:src="${b.image_path}" class="videocard__img" alt="Book image"
+                                     style="object-fit: cover;margin-right: 20px">
+                                <h5 class="video__text" th:text="${b.name}">Card title</h5>
+                                <!--                        <p class="videoCard__info"><strong>Published Date:  </strong>-->
+                                <!--                            <span th:text="${b.published_date}"></span></p>-->
+                                    <a th:href="@{/book/view/}+${b.id}" class="btn btn-primary btn">More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary leftLst"><</button>
+            <button class="btn btn-primary rightLst">></button>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var itemsMainDiv = ('.MultiCarousel');
+        var itemsDiv = ('.MultiCarousel-inner');
+        var itemWidth = "";
+
+        $('.leftLst, .rightLst').click(function () {
+            var condition = $(this).hasClass("leftLst");
+            if (condition)
+                click(0, this);
+            else
+                click(1, this)
+        });
+
+        ResCarouselSize();
+
+
+
+
+        $(window).resize(function () {
+            ResCarouselSize();
+        });
+
+        //this function define the size of the items
+        function ResCarouselSize() {
+            var incno = 0;
+            var dataItems = ("data-items");
+            var itemClass = ('.item');
+            var id = 0;
+            var btnParentSb = '';
+            var itemsSplit = '';
+            var sampwidth = $(itemsMainDiv).width();
+            var bodyWidth = $('body').width();
+            $(itemsDiv).each(function () {
+                id = id + 1;
+                var itemNumbers = $(this).find(itemClass).length;
+                btnParentSb = $(this).parent().attr(dataItems);
+                itemsSplit = btnParentSb.split(',');
+                $(this).parent().attr("id", "MultiCarousel" + id);
+
+
+                if (bodyWidth >= 1200) {
+                    incno = itemsSplit[3];
+                    itemWidth = sampwidth / incno;
+                }
+                else if (bodyWidth >= 992) {
+                    incno = itemsSplit[2];
+                    itemWidth = sampwidth / incno;
+                }
+                else if (bodyWidth >= 768) {
+                    incno = itemsSplit[1];
+                    itemWidth = sampwidth / incno;
+                }
+                else {
+                    incno = itemsSplit[0];
+                    itemWidth = sampwidth / incno;
+                }
+                $(this).css({ 'transform': 'translateX(0px)', 'width': itemWidth * itemNumbers });
+                $(this).find(itemClass).each(function () {
+                    $(this).outerWidth(itemWidth);
+                });
+
+                $(".leftLst").addClass("over");
+                $(".rightLst").removeClass("over");
+
+            });
+        }
+
+
+        //this function used to move the items
+        function ResCarousel(e, el, s) {
+            var leftBtn = ('.leftLst');
+            var rightBtn = ('.rightLst');
+            var translateXval = '';
+            var divStyle = $(el + ' ' + itemsDiv).css('transform');
+            var values = divStyle.match(/-?[\d\.]+/g);
+            var xds = Math.abs(values[4]);
+            if (e == 0) {
+                translateXval = parseInt(xds) - parseInt(itemWidth * s);
+                $(el + ' ' + rightBtn).removeClass("over");
+
+                if (translateXval <= itemWidth / 2) {
+                    translateXval = 0;
+                    $(el + ' ' + leftBtn).addClass("over");
+                }
+            }
+            else if (e == 1) {
+                var itemsCondition = $(el).find(itemsDiv).width() - $(el).width();
+                translateXval = parseInt(xds) + parseInt(itemWidth * s);
+                $(el + ' ' + leftBtn).removeClass("over");
+
+                if (translateXval >= itemsCondition - itemWidth / 2) {
+                    translateXval = itemsCondition;
+                    $(el + ' ' + rightBtn).addClass("over");
+                }
+            }
+            $(el + ' ' + itemsDiv).css('transform', 'translateX(' + -translateXval + 'px)');
+        }
+
+        //It is used to get some elements from btn
+        function click(ell, ee) {
+            var Parent = "#" + $(ee).parent().attr("id");
+            var slide = $(Parent).attr("data-slide");
+            ResCarousel(ell, Parent, slide);
+        }
+
+    });
+</script>
+
+<div class="wrapper" th:if="${not #lists.isEmpty(recommendateBook)}">
+    <div class="header">
+        <h1 style="margin: 0.5em 0 0.2em 0;
+	color: #343434;
+	font-weight: normal;
+	font-family: 'Ultra', sans-serif;
+	font-size: 33px;
+	line-height: 34px;
+	text-transform: uppercase;
+	text-shadow: 0 2px white, 0 3px #777;">
+<!--           <a th:href="@{/recommendation/10}">You may like</a>-->
+            <a>You may like</a>
+        </h1>
+        <div class="zigzag"></div>
+    </div>
+    <div class="cards">
+        <div class="card" style="width: 19rem;" th:each="b:${recommendateBook}">
+            <img th:src="${b.image_path}" class="videocard__img" alt="Book image">
+            <div class="card-body">
+                <h5 class="video__text" th:text="${b.name}"></h5>
+                <a th:href="@{/book/view/}+${b.id}" class="btn btn-primary btn">More</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+    <div th:replace="~{/fragments/LogoutPopup :: popup}"></div>
+    <div th:replace="~{fragments/Footer :: footer}"></div>
+
+</body>
+</html>

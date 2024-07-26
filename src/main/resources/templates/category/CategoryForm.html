@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/HtmlHeader :: html_head('Category Form')}"></th:block>
+</head>
+<body>
+<div th:replace="~{fragments/Sidebar :: sidebar}"></div>
+
+<!-- tables section -->
+<div class="wrapper">
+    <div th:replace="~{fragments/NavBar :: navbar}"></div>
+    <div class="section">
+        <div class="box-area">
+
+            <div class="category-form">
+                <div class="titleDesc">
+                    <strong>Category form</strong>
+
+                    <a th:href="@{/category/table}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+                            <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="alert alert-danger alert-dismissible fade show"  th:if="${errorMsg}">
+                    <span th:text="${errorMsg.message}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+
+                <form class="login" th:object="${category}" th:method="POST" , th:action="@{/category/save}">
+                    <div class="form-floating ">
+                        <input type="text" th:field="*{id}" hidden>
+                    </div>
+
+                    <div class="form-floating ">
+                        <input type="text" class="form-control"
+                               id="floatingInput" ,
+                               th:field="*{name}"
+                               th:classappend="${#fields.hasErrors('name')?'is-invalid':''}"
+                        >
+
+                        <label for="floatingInput">Name</label>
+                    </div>
+
+                    <div class="form-floating">
+                            <textarea class="form-control"
+                                      id="floatingTextarea2"
+                                      style="height: 180px"
+                                      th:field="*{description}"
+                                      th:classappend="${#fields.hasErrors('description')?'is-invalid':''}"
+                            ></textarea>
+                        <label for="floatingTextarea2">Description</label>
+                    </div>
+
+                    <button class="btn btn-dark upload_btn mt-4 me-3" type="reset">Reset</button>
+                    <button class="btn  btn-primary upload_btn_submit ms-4 mt-4" type="submit">Submit</button>
+
+                    <div class="alert alert-danger alert-dismissible fade show mt-3" th:if="${#fields.hasErrors('*')}">
+                        <i class="fa-solid fa-triangle-exclamation" style="color: #ff0505;"></i><hr>
+                        <ul>
+                            <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                        </ul>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="~{fragments/Footer :: footer}"></div>
+</body>
+</html>

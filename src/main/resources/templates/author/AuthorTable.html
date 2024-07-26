@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/HtmlHeader :: html_head('Author Table')}"></th:block>
+
+</head>
+<body>
+<div th:replace="~{fragments/Sidebar :: sidebar}"></div>
+
+<!-- tables section -->
+<div class="wrapper">
+    <div th:replace="~{fragments/NavBar :: navbar}"></div>
+    <div class="section">
+        <div class="box-area">
+
+            <div class="user_table_post  mt-5">
+
+                <!--                        error message-->
+                <div class="alert alert-danger alert-dismissible fade show" th:if="${errorMsg}">
+                    <i class="fa-solid fa-triangle-exclamation" style="color: #ff0505;"></i> <span th:text="${errorMsg.message}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+
+                <!-- success message -->
+                <div class="alert alert-success alert-dismissible fade show" th:if="${message}">
+                    <i class="fa-solid fa-badge-check" style="color: #16e37a;"></i> <span th:text="${message}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+
+                <div class="d-flex justify-content-between w-1024 desc" >
+                    <h3>Author list</h3>
+                    <a class="btn btn-info" id="creatBtn" th:href="@{/author/form}">Create</a>
+                </div>
+
+
+                <table class="table table-bordered table-striped mt-3">
+                    <thead>
+                    <tr>
+                        <th> S.N.</th>
+                        <th> <i class="fa-solid fa-user"></i>  Name</th>
+                        <th><i class="fa-solid fa-envelope"></i>Email</th>
+                        <th><i class="fa-solid fa-mobile"></i>Mobile</th>
+                        <th> <i class="fa-solid fa-pen"></i>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="author,Index:${author} ">
+                        <td><div th:text="${Index.count}"></div></td>
+                        <td><div th:text="${author.name}"></div></td>
+                        <td><div th:text="${author.email}"></div></td>
+                        <td><div th:text="${author.number}"></div></td>
+                        <td class="actionField">
+                            <a th:href="@{/author/update/}+${author.id}">
+                                <i class="fa-sharp fa-solid fa-pen-to-square" style="color: #0e5fec;"></i>
+                            </a>
+                            <a  th:href="@{/author/delete/}+${author.id}">
+                                <i class="fa-solid fa-trash" style="color: #ea0b0b;"></i>
+                            </a>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="~{fragments/Footer :: footer}"></div>
+</body>
+</html>

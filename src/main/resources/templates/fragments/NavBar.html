@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Navbar</title>
+</head>
+<body>
+<!-- Image and text -->
+<!--<nav class="navbar navbar-light " style="background-color: #999999;" th:fragment="navbar">-->
+<!--  <div >-->
+<!--      <a class="navbar-brand" th:href="@{/home}">-->
+<!--          <img th:src="@{/images/logo.jpg}"-->
+<!--               width="30" height="30" class="d-inline-block align-top" alt="">-->
+<!--          <span style="color: white;" >E Book </span>-->
+<!--      </a>-->
+<!--  </div>-->
+
+<!--    <div class="userLogin">-->
+<!--        <img th:src="@{/images/profile.png}" class="rounded-circle" style="width: 40px;"-->
+<!--             alt="Avatar" />-->
+<!--        <p sec:authentication="principal.username"></p>-->
+<!--    </div>-->
+
+<!--</nav>-->
+<nav class="navbar navbar-light " style="background-color: #999999;" th:fragment="navbar">
+    <div class="d-flex align-items-center form-inline">
+        <a class="navbar-brand" th:href="@{/home}">
+            <img th:src="@{/images/logo.png}" width="30" height="30" class="d-inline-block align-top" alt="">
+            <span style="color: white;">E Universe </span>
+        </a>
+
+        <!-- Gap between the second image and the search bar -->
+        <div style="margin-right: 100px;"></div>
+
+        <!-- Search Bar -->
+        <style>
+            .search-result {
+                position: absolute;
+                top: 60px; /* Adjust the top position */
+                left: 230px;
+                z-index: 1000;
+                background-color: #fff;
+                border: 1px solid #ccc;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                display: none;
+                /*max-height: 70px; !* Reduce the maximum height *!*/
+                width: 250px; /* Adjust the width */
+            }
+
+            .list-group {
+                margin: 0;
+                padding: 2px; /* Adjust padding */
+            }
+
+            .list-group-item {
+                cursor: pointer;
+                padding: 4px;
+                border: none;
+            }
+
+            .list-group-item:hover {
+                background-color: #f2f2f2;
+            }
+
+            .form-control {
+                width: 300px; /* Increase the width of the search field */
+            }
+        </style>
+            <form class="form-inline d-flex align-items-center">
+                <input class="form-control mr-sm-2"
+                       id="search-inputfield"
+                       type="search" placeholder="Search Books"
+                       aria-label="Search"
+                      onkeyup="search()"
+                >
+                <!--                        search filter div-->
+                <div class="search-result" >
+
+                </div>
+<!--                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>-->
+                <script>
+                    function search(){
+                        console.log("seaching");
+                        let query = $("#search-inputfield").val();
+                        console.log(query);
+
+                        if(query == ""){
+                            $(".search-result").hide();  //it will hide the search box popup info if we have nothing in input
+                        }else {
+
+                            let url =   `http://localhost:8080/search/${query}`;
+
+                            fetch(url).then((response)=>{
+                                return response.json(); //all the response first come here and it will convert into JSON and return
+                            }).then((data)=>{
+                                //we get the return data from above function
+                                console.log(data);
+
+                                let text = `<div class="list-group">`
+
+                                data.forEach((book) =>{
+                                    text+= `<a href="/book/view/${book.id}" class="list-group-item list-group-action">${book.name}</a>`
+                                });
+
+
+
+                                text+= `</div>`;
+
+                                $(".search-result").html(text);
+                                $(".search-result").show();
+
+                            })
+
+                            console.log(query);
+                            $(".search-result").show();   //it will show the search box popup info if we have nothing in input
+                        }
+                    }
+                </script>
+            </form>
+
+        <!-- Gap between the first image and the second image -->
+        <div style="margin-right: 450px;"></div>
+
+        <div class="userLogin">
+            <img th:src="@{/images/profile.png}" class="rounded-circle" style="width: 40px;" alt="Avatar" />
+            <p sec:authentication="principal.username"></p>
+        </div>
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</nav>
+
+</body>
+</html>
+
+

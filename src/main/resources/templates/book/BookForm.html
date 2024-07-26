@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/HtmlHeader :: html_head('Book Form')}"></th:block>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+
+<div th:replace="~{fragments/Sidebar :: sidebar}"></div>
+
+<!-- tables section -->
+<div class="wrapper">
+    <div th:replace="~{fragments/NavBar :: navbar}"></div>
+    <div class="section">
+        <div class="box-area">
+
+            <div class="category-form bookCategory">
+                <div class="titleDesc">
+                    <strong>Book form</strong>
+
+                    <a th:href="@{/book/table}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+                            <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="alert alert-danger alert-dismissible fade show mt-2"  th:if="${errorMsg}">
+                    <i class="fa-solid fa-triangle-exclamation" style="color: #ff0505;"></i> <span th:text="${errorMsg.message}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+
+                <form class="login" th:object="${book}" enctype="multipart/form-data"
+                      th:action="@{/book/save}" th:method="POST">
+                    <div class="form-floating ">
+                        <input type="text" th:field="*{id}" hidden>
+                    </div>
+
+                    <div class="form-floating ">
+                        <input type="text" class="form-control"
+                               id="floatingInput"
+                               th:field="*{name}"
+                               th:classappend="${#fields.hasErrors('name')?'is-invalid':''}"
+                        >
+                        <label for="floatingInput">Name</label>
+                        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red"></p>
+                    </div>
+
+<!--                    <div class="form-floating ">-->
+<!--                        <input type="number"  class="form-control"-->
+<!--                               th:field="*{page}"-->
+<!--                               th:classappend="${#fields.hasErrors('page')?'is-invalid':''}">-->
+<!--                        <label for="floatingInput">Page Number</label>-->
+<!--                        <p th:if="${#fields.hasErrors('page')}" th:errors="*{page}" style="color: red" ></p>-->
+
+<!--                    </div>-->
+
+                    <div class="form-floating d-flex flex-fill justify-content-between gap-5 ">
+                        <input type="text" class="form-control"
+                               th:field="*{isbn}"
+                               th:classappend="${#fields.hasErrors('isbn')?'is-invalid':''}"
+                        >
+                        <label for="floatingInput">isbn number</label>
+
+<!--                        <div class="ratingContainer">-->
+<!--                            <span>Rating</span>-->
+
+<!--                            <div class="star-rating">-->
+<!--                                <input type="radio" name="stars" id="star-a" th:field="*{rating}"-->
+<!--                                       th:value="1" onclick="performAction(1.0)"/>-->
+<!--                                <label for="star-a" ></label>-->
+
+<!--                                <input type="radio" name="stars" id="star-b" th:field="*{rating}"-->
+<!--                                       th:value="2" onclick="performAction(2.0)"/>-->
+<!--                                <label for="star-b" ></label>-->
+
+<!--                                <input type="radio" name="stars" id="star-c" th:field="*{rating}"-->
+<!--                                       th:value="3" onclick="performAction(3.0)"/>-->
+<!--                                <label for="star-c" ></label>-->
+
+<!--                                <input type="radio" name="stars" id="star-d" th:field="*{rating}"-->
+<!--                                       th:value="4" onclick="performAction(4.0)"/>-->
+<!--                                <label for="star-d" ></label>-->
+
+<!--                                <input type="radio" name="stars" id="star-e" th:field="*{rating}"-->
+<!--                                       th:value="5" onclick="performAction(5.0)"/>-->
+<!--                                <label for="star-e" ></label>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                    </div>
+
+                    <script>
+                        function performAction(starValue) {
+                            // Construct the URL with the input field value
+                            var url = "/save/rating/" + starValue;
+
+                            // Create a new XMLHttpRequest object
+                            var xhr = new XMLHttpRequest();
+
+                            // Configure it to be a GET request to the constructed URL
+                            xhr.open("GET", url, true);
+
+                            // Set up the callback function to handle the response
+                            xhr.onload = function () {
+                                if (xhr.status === 200) {
+                                    // Request was successful, handle the response here
+                                    console.log("Request successful");
+                                } else {
+                                    // Request failed, handle the error here
+                                    console.error("Request failed with status: " + xhr.status);
+                                }
+                            };
+
+                            // Send the GET request
+                            xhr.send();
+                        }
+                    </script>
+
+
+                    <div class="form-floating d-flex flex-fill justify-content-between gap-5">
+<!--                        <div class="form-floating">-->
+<!--                            <input type="number" class="form-control"-->
+<!--                                   th:field="*{stock}"-->
+<!--                                   th:classappend="${#fields.hasErrors('stock')?'is-invalid':''}"-->
+<!--                            >-->
+<!--                            <label for="floatingInput">Stock</label>-->
+<!--                            <p th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}" style="color: red" ></p>-->
+<!--                        </div>-->
+
+                        <div class="form-floating">
+                            <input type="date" id="inputDate" min="10" class="form-control"
+                                   th:field="*{published_date}"
+                                   th:classappend="${#fields.hasErrors('published_date')?'is-invalid':''}"
+                            >
+                            <label for="floatingInput">Published Date</label>
+                            <p th:if="${#fields.hasErrors('published_date')}" th:errors="*{published_date}" style="color: red"></p>
+                        </div>
+
+                    </div>
+
+                    <div class="form-floating" >
+                        <input type="file" min="10" class="form-control"
+                               th:field="*{imageFile}"
+                               th:classappend="${#fields.hasErrors('imageFile')?'is-invalid':''}"
+                        >
+                        <p>(only jpg & png file)</p>
+                        <p th:if="${#fields.hasErrors('imageFile')}" th:errors="*{imageFile}" style="color: red"></p>
+                    </div>
+                    <div class="form-floating" >
+                        <input type="file" min="10" class="form-control"
+                               th:field="*{contentFile}"
+                        >
+                    </div>
+
+                    <div class="form-floating" th:if="${book.id}">
+                        <input type="text" min="10" class="form-control"
+                               th:field="*{image_path}"
+                        >
+                        <p style="color: red" th:if="${#fields.hasErrors('image_path')}" th:errors="*{image_path}" ></p>
+                    </div>
+
+
+                    <div class="form-floating d-flex flex-fill gap-5">
+                        <div class="categoryId" th:classappend="${#fields.hasErrors('published_date')?'is-invalid':''}">
+                            <label for="Category" class=""> Category</label>
+                            <select th:field="*{categoryId}" class="form-select mt-2"
+                                    id="Category">
+                                <option th:each="category : ${category}"
+                                        th:value="${category.id}"
+                                        th:text="${category.name}">
+                                </option>
+
+                            </select>
+                        </div>
+
+
+                        <div class="authorId">
+                            <label for="Author" > Author</label>
+                            <select th:field="*{authorsId}"  class="form-select mt-2"
+                                     multiple>
+                                <option th:each="author : ${author}"
+                                        th:value="${author.id}"
+                                        th:text="${author.name}">
+                                </option>
+
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="form-floating">
+                            <textarea class="form-control"
+                                      id="floatingTextarea2"
+                                      style="height: 180px"
+                                      th:field="*{description}"
+                                      th:classappend="${#fields.hasErrors('description')?'is-invalid':''}"
+                            ></textarea>
+                        <label for="floatingTextarea2">Description</label>
+                    </div>
+                    <button class="btn btn-dark upload_btn mt-4 me-3" type="reset">Reset</button>
+                    <button class="btn  btn-primary upload_btn_submit ms-4 mt-4" type="submit">Submit</button>
+
+                    <div class="alert alert-danger alert-dismissible fade show mt-3" th:if="${#fields.hasErrors('*')}">
+                        <strong>Error! </strong><hr>
+                        <ul>
+                            <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                        </ul>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="~{fragments/Footer :: footer}"></div>
+<script>
+    $(function(){
+        var dtToday = new Date();
+
+        var month = dtToday.getMonth() + 1;
+        var day = dtToday.getDate();
+        var year = dtToday.getFullYear();
+        if(month < 10)
+            month = '0' + month.toString();
+        if(day < 10)
+            day = '0' + day.toString();
+
+        var minDate = year + '-' + month + '-' + day;
+        // alert(maxDate);
+        $('#inputDate').attr('max', minDate);
+    });
+</script>
+
+</body>
+</html>

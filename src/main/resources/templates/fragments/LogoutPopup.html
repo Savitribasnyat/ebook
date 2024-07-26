@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:fragment="popup">
+  <!--            this part is for logout popup box        -->
+  <div id="popup" class="popup">
+    <div class="popup-content">
+      <p>Are you sure you want to logout?</p>
+      <button class="popup-button" onclick="confirmLogout()">Yes</button>
+      <button class="popup-button" onclick="hidePopup()">No</button>
+    </div>
+  </div>
+
+  <script>
+    function showPopup() {
+      document.getElementById("popup").style.display = "block";
+    }
+
+    function hidePopup() {
+      document.getElementById("popup").style.display = "none";
+    }
+    function confirmLogout() {
+      window.location.href = "/logout";
+      hidePopup();
+    }
+
+  </script>
+</div>
+
+</body>
+</html>

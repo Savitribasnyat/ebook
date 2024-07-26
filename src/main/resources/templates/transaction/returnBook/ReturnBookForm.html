@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/HtmlHeader :: html_head('Return Book Form')}"></th:block>
+
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+
+<div th:replace="~{fragments/Sidebar :: sidebar}"></div>
+
+
+<!-- form section -->
+<div class="wrapper">
+    <div th:replace="~{fragments/NavBar :: navbar}"></div>
+    <div class="section">
+        <div class="box-area">
+
+            <div class="category-form">
+                <div class="titleDesc">
+                    <span><strong>Return Book form</strong></span>
+
+                    <a th:href="@{/transaction/table}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                             class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+                            <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="alert alert-danger alert-dismissible fade show" th:if="${errorMsg}">
+                    <i class="fa-solid fa-triangle-exclamation" style="color: #ff0505;"></i> <span th:text="${errorMsg.message}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+
+                <div  class="codeCheck">
+
+                    <form th:action="@{/return/book/code}" th:method="GET" th:object="${transaction}">
+                        <div class="form-floating">
+                            <div class="search-container">
+
+                                <input type="text"
+                                       class="form-control"
+                                       id="search-input"
+                                       placeholder="Enter your book code"
+                                       th:field="*{code}"
+                                       onkeyup="search()"
+                                >
+                                <!--                        search filter div-->
+                                <div class="search-result">
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <button class="btn  btn-primary upload_btn_submit ms-4 mt-4" type="submit">Check</button>
+
+                    </form>
+
+                    <div class="after_form" th:object="${transaction}" th:if="${transaction.code}">
+
+                        <div class="col-md-8 book_form">
+                            <form th:action="@{/return/book/save}"  th:method="POST">
+                                <div class="form-floating ">
+                                    <input type="text" class="form-control" th:field="*{code}" hidden>
+                                    <label for="floatingInput">code</label>
+                                </div>
+                                <div class="form-floating ">
+                                    <input type="text" class="form-control" th:field="*{from}" disabled>
+                                    <label for="floatingInput">Date of Rent</label>
+                                </div>
+
+                                <div class="form-floating ">
+                                    <input type="date" id="inputDate" class="form-control" th:field="*{returnDate}" required>
+                                    <label for="floatingInput">Return Date</label>
+                                </div>
+                                <div class="form-floating ">
+                                    <input type="text" class="form-control" th:field="*{member_name}" disabled>
+                                    <label for="Member Name">Member Name</label>
+                                </div>
+
+<!--                                <button class="btn btn-dark upload_btn mt-4 me-3" type="reset">Reset</button>-->
+                                <button class="btn  btn-primary upload_btn_submit ms-4 mt-4" type="submit">Submit
+                                </button>
+
+                                <div class="alert alert-danger alert-dismissible fade show mt-3"
+                                     th:if="${#fields.hasErrors('*')}">
+                                    <strong>Error! </strong>
+                                    <hr>
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                                    </ul>
+
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <div class="col-md-6 book_desc"  th:each="b:${book}">
+                            <img alt="book image" th:src="${book.image_path}" class="img-fluid">
+                            <p th:text="${book.name}"></p>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+<script th:src="@{/js/searchCode.js}"></script>
+<div th:replace="~{fragments/Footer :: footer}"></div>
+
+
+<!--    code input filter js-->
+<script>
+    function myFunction() {
+
+        // Declare variables
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById('myInput');
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("myUL");
+        li = ul.getElementsByTagName('li');
+
+        ul.style.display = "block";
+
+        // Loop through all list items, and hide those who don't match the search query
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("a")[0];
+            txtValue = a.textContent || a.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+    }
+</script>
+
+
+
+<!--this is used to disable the previous date-->
+<script>
+    $(function(){
+        var dtToday = new Date();
+
+        var month = dtToday.getMonth() + 1;
+        var day = dtToday.getDate();
+        var year = dtToday.getFullYear();
+        if(month < 10)
+            month = '0' + month.toString();
+        if(day < 10)
+            day = '0' + day.toString();
+
+        var maxDate = year + '-' + month + '-' + day;
+        // alert(maxDate);
+        $('#inputDate').attr('min', maxDate);
+    });
+</script>
+
+
+</body>
+</html>

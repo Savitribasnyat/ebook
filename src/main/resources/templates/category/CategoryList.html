@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <th:block th:replace="~{fragments/HtmlHeader :: html_head('Category List')}"></th:block>
+</head>
+<body>
+    <div th:replace="~{fragments/Sidebar :: sidebar}"></div>
+    <div class="wrapper">
+        <div th:replace="~{fragments/NavBar :: navbar}"></div>
+
+        <div class="category-list">
+            <div class="header">
+                <h1 style="margin: 0.5em 0 0.2em 0;
+	color: #343434;
+	font-weight: normal;
+	font-family: 'Ultra', sans-serif;
+	font-size: 33px;
+	line-height: 34px;
+	text-transform: uppercase;
+	text-shadow: 0 2px white, 0 3px #777;">
+                    CATEGORY LIST
+                </h1>
+                <div class="zigzag"></div>
+            </div>
+            <ul>
+                <li class="category-card" th:each="category :${categoryResponse}">
+                    <a th:href="@{/category/book/list/{id}(id=${category.id})}" style="text-decoration: none;" >
+                        <span th:text="${category.name}"></span>
+                    </a>
+                </li>
+                <style>
+                    span:hover{color: red}
+                </style>
+            </ul>
+        </div>
+
+    </div>
+
+    <div th:replace="~{fragments/Footer :: footer}"></div>
+
+    <style>
+        .category-list {
+            margin-top: 18px;
+            margin-left: 40px;
+        }
+
+        .category-list h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .category-list ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .category-card {
+            width: 250px; /* Set a specific width for all cards */
+            background-color: #f5f5f5;
+            border: 2px solid #e0e0e0;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-right: 30px;
+            margin-bottom: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-size: 24px;
+            font-family: 'Pacifico', cursive; /* Attractive font style */
+            color: #3498db; /* Font color */
+        }
+
+        .category-card:hover {
+            background-color: #ecf0f1;
+            color: #e74c3c;
+        }
+
+        .header{
+            margin-bottom: 18px;
+        }
+
+    </style>
+
+</body>
+</html>

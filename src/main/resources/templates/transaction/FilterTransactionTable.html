@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <th:block th:replace="~{fragments/HtmlHeader :: html_head('Transaction History Table')}"></th:block>
+</head>
+<body>
+
+<div th:replace="~{fragments/Sidebar :: sidebar}"></div>
+
+<!-- tables section -->
+<div class="wrapper">
+  <div th:replace="~{fragments/NavBar :: navbar}"></div>
+  <div class="section">
+    <div class="box-area">
+
+      <div class="user_table_post  mt-5">
+        <div class="d-flex justify-content-between w-1024 desc" id="transactionHistory">
+          <div>
+            <h3>Transaction History</h3>
+          </div>
+          <div class="download">
+            <a th:href="@{/transaction/table}" >
+              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+                <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+         <div th:if="${filter}">
+          <form th:action="@{/transaction/page/filter/first/0}" th:object="${filter}" th:method="POST">
+
+            <div class="form-floating d-flex flex-fill justify-content-between gap-5">
+              <div class="form-floating">
+                <input type="date" class="form-control"
+                       th:field="*{from}" >
+                <label for="floatingInput">from</label>
+              </div>
+
+              <div class="form-floating">
+                <input type="date" id="inputDate" min="10"
+                       th:field="*{to}"
+                       class="form-control" >
+                <label for="floatingInput">To Date</label>
+              </div>
+
+              <div class="form-floating">
+                <button class="btn  btn-primary upload_btn_submit ms-4 mt-4" type="submit">Search</button>
+              </div>
+
+            </div>
+
+          </form>
+        </div>
+
+
+        <table class="table table-bordered table-striped mt-3" >
+          <thead>
+          <tr>
+            <th>S.N.</th>
+            <th><i class="fa-solid fa-book"></i>Book Name</th>
+            <th><i class="fa-solid fa-user"></i> Customer Name</th>
+            <th>Rent from</th>
+            <th>Status</th>
+            <th>Return Date</th>
+            <th><i class="fa-solid fa-code"></i>Code</th>
+
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="t, Index : ${transaction} ">
+            <td th:text="${Index.count}">1</td>
+            <td th:text="${t.book_name}"></td>
+            <td th:text="${t.member_name}"></td>
+            <td th:text="${t.from}"></td>
+            <td th:text="${t.status}"></td>
+            <td th:text="${t.returnDate}"></td>
+            <td th:text="${t.code}"></td>
+
+          </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+
+      <div aria-label="Page navigation example" th:if="!${#lists.isEmpty(transaction)}">
+        <ul class="pagination">
+          <li
+              class="page-item">
+            <a th:href="@{'/transaction/page/filter/' + ${currentPage - 1}+'?fromDate=' + ${fromDate} + '&todate=' + ${todate}}"
+               class="page-link"
+               th:classappend="${currentPage <= 0}? 'disabled':''"
+            >Previous</a>
+          </li>
+          <li th:each="i: ${#numbers.sequence(0, totalPages - 1)}"
+              class="page-item">
+            <a  th:href="@{'/transaction/page/filter/' + ${i}+'?fromDate=' + ${fromDate} + '&todate=' + ${todate}}"
+                class="page-link"
+                th:classappend="${currentPage == i}?'active':''"
+            >[[${i+1}]]</a>
+          </li>
+          <!--                    <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+          <!--                    <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+          <li class="page-item">
+            <a  th:href="@{'/transaction/page/filter/' + ${currentPage + 1}+'?fromDate=' + ${fromDate} + '&todate=' + ${todate}}"
+                class="page-link"
+                th:classappend="${currentPage >= totalPages - 1}?'disabled':''"
+            >Next</a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!--            <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>-->
+</div>
+
+
+
+
+<div th:replace="~{fragments/Footer :: footer}"></div>
+
+</body>
+</html>
