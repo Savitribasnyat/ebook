@@ -9,7 +9,7 @@
 <div>
     <nav th:fragment="sidebar">
         <ul>
-           <a th:href="@{/home}"> <li class="logo"><img alt="Book Logo" th:src="@{/images/logo.png}"></li></a>
+           <a th:href="@{/home}"> <li class="logo"><img alt="Book Logo" th:src="@{/images/mainlogo.png}"></li></a>
 
             <div sec:authorize="hasAuthority('ADMIN')">
                 <li>
